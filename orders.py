@@ -2,12 +2,19 @@ import csv
 import re
 import os
 import datetime
+import json
+
+json_settings_file = open('./settings.json')
+json_settings = json.load(json_settings_file)
 
 SETTINGS = {
     'filename': '',
-    'date': '20210513-2',
+    'date': json_settings['date'],
     'source': 'CROWDOX',
+    'addons': True,
 }
+
+json_settings_file.close()
 
 export_dir = './export/' + SETTINGS['date'] + '/'
 if not os.path.exists(export_dir):
@@ -98,6 +105,9 @@ STATE_ABBREV = {
 
 SKU_PRICING = {
     'MK-2311G': [99, 10],
+    'MK-2311G-LID': [99, 10],
+    'MK-2312G-LID': [99, 10],
+    'MK-2312T-LID': [99, 10],
     'MK-2311T': [99, 10],
     'MK-2311T-LID': [99, 10],
     'MK-2312G': [99, 10],
@@ -120,6 +130,20 @@ SKU_PRICING = {
     'MK-2323T': [99, 10],
     'MK-2324G-LID': [99, 10],
     'MK-2324T': [99, 10],
+    'MK-2313T-LID': [99, 10],
+    'MK-2321G-LID': [99, 10],
+    'MK-2321T': [99, 10],
+    'MK-2321T-LID': [99, 10],
+    'MK-2322G-LID': [99, 10],
+    'MK-2322T-LID': [99, 10],
+    'MK-2323G-LID': [99, 10],
+    'MK-2323T-LID': [99, 10],
+    'MK-2324G': [99, 10],
+    'MK-2324T-LID': [99, 10],
+    'MK-2325G': [99, 10],
+    'MK-2325G-LID': [99, 10],
+    'MK-2325T': [99, 10],
+    'MK-2325T-LID': [99, 10],
 }
 
 INTL_SHIPPING = {
@@ -174,6 +198,8 @@ with open(import_filename) as import_file:
 
                 if SETTINGS['source'] == 'CROWDOX':
                     order_number = re.sub('CROWDOX-', '', order_number)
+                    if SETTINGS['addons'] is True:
+                        order_number = order_number + '-1'
                     sku = row[44]
                     quantity = row[45]
                 elif SETTINGS['source'] == 'BACKERKIT':

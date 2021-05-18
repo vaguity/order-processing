@@ -1,28 +1,25 @@
-# Misen manual order processing for Fosdick Fulfillment
+# Misen manual order processing script
 
-- for people who bought the 10 and 12 inch bundle and then added on the 8 inch, combine into the 8-10-12 bundle SKU
-- combine SKUs into bundles wherever possible
+## Python virtual environment setup
 
-## Combining carbon steel SKUs
+- Create directory and set up virtual environment: `python3 -m venv .`
+- Activate environment: `source bin/activate`
+- Deactivate environment when done: `deactivate`
 
-The carbon steel skus you should see in the file are:
+## Updating script with git
 
-    MK-2211 (8")
-    MK-2212 (10")
-    MK-2213 (12")
-    MK-2215 (10+12)
-    MK-2217 (8+10+12, All 3)
-    MK-6300 (seasoning stick - every order should have one of these)
-    MK-6301 (seasoning puck)
-    Knife skus that were add-ons
+In the Terminal, while in this directory:
 
-The scenarios we are solving for are:
+- `git add -A`
+- `git reset --hard`
+- `git fetch`
+- `git pull`
 
-    Customer with MK-2215 and added MK-2211 > Should be changed to MK-2217
-    Customer with MK-2212 and added MK-2213 > Should be changed to MK-2215
-    Customer with MK-2213 and added MK-2212 > Should be changed to MK-2215
-    Customer who individually had MK-2211, MK-2212 and MK-2213 > Should be changed to MK-2217 (there shouldn't be very many of these)
+You will need to update the date in `orders2.py` after running these commands, even if you've already updated the date.
 
-### Notes
+## Guide
 
-- Adjusted name split
+- Put files in `./import/[date].csv`
+- Update the date in `orders2.py`
+- Run `python orders2.py`
+- Exported file will be created in `./export/[date]` directory
