@@ -2,4 +2,4 @@ lib/*
 bin/*
 export/*
 import/*
-./settings.json
+settings.json
