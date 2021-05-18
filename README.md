@@ -1,16 +1,18 @@
 # Misen manual order processing script
 
-## Python virtual environment setup
+## Setup
+
+### Python virtual environment
 
 - Create directory and set up virtual environment: `python3 -m venv .`
 - Activate environment: `source bin/activate`
 - Deactivate environment when done: `deactivate`
 
-## Settings file
+### Settings file
 
 Copy `settings.example.json` to `settings.json`.
 
-## Updating script with git
+### Updating script with git
 
 In the Terminal, while in this directory:
 
@@ -23,4 +25,3 @@ In the Terminal, while in this directory:
 - Update the date in `settings.json` to correspond to the file in the import directory
 - Run `python orders.py`
 - Exported file will be created in `./export/[date]` directory
-
