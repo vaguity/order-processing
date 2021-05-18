@@ -20,6 +20,6 @@ You will need to update the date in `orders2.py` after running these commands, e
 ## Guide
 
 - Put files in `./import/[date].csv`
-- Update the date in `orders2.py`
-- Run `python orders2.py`
+- Update the date in `settings.json` to correspond to the file in the import directory
+- Run `python orders.py`
 - Exported file will be created in `./export/[date]` directory
