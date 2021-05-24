@@ -11,7 +11,7 @@ SETTINGS = {
     'filename': '',
     'date': json_settings['date'],
     'source': 'CROWDOX',
-    'addons': True,
+    'addons': json_settings['addons'],
 }
 
 json_settings_file.close()
@@ -156,6 +156,36 @@ INTL_SHIPPING = {
     'SG': 45,
     'TW': 45,
     'JP': 25,
+    'GR': 25,
+    'LU': 25,
+    'DE': 25,
+    'CH': 25,
+    'FR': 25,
+    'IE': 25,
+    'NL': 25,
+    'SE': 25,
+    'BE': 25,
+    'PL': 25,
+    'CZ': 25,
+    'ES': 25,
+    'DK': 25,
+    'IT': 25,
+    'BG': 25,
+    'AT': 25,
+    'SK': 25,
+    'LT': 25,
+    'LV': 25,
+    'HU': 25,
+    'NO': 25,
+    'PT': 25,
+    'CY': 25,
+    'RO': 25,
+    'SI': 25,
+    'FI': 25,
+    'MT': 25,
+    'HR': 25,
+    'IS': 25,
+    'EE': 25,
 }
 
 
@@ -258,16 +288,17 @@ with open(import_filename) as import_file:
 
                 product_id = "KSSIX"
 
-                if len(state) > 2:
-                    if state in STATE_ABBREV:
-                        state = STATE_ABBREV[state]
-                    elif state.replace('.', '').replace(' ', '') in STATE_ABBREV:
-                        state = STATE_ABBREV[state.replace('.', '').replace(' ', '')]
-                    else:
-                        state = state.replace('.', '').replace(' ', '')
+                if country in ['US', 'CA']:
+                    if len(state) > 2:
+                        if state in STATE_ABBREV:
+                            state = STATE_ABBREV[state]
+                        elif state.replace('.', '').replace(' ', '') in STATE_ABBREV:
+                            state = STATE_ABBREV[state.replace('.', '').replace(' ', '')]
+                        else:
+                            state = state.replace('.', '').replace(' ', '')
 
-                if len(state) > 2:
-                    log_error('Error: State, Order ' + str(order_number) + ', Row ' + str(index) + ': ' + state, error_file)
+                    if len(state) > 2:
+                        log_error('Error: State, Order ' + str(order_number) + ', Row ' + str(index) + ': ' + state, error_file)
 
                 if len(postal_code) > 11:
                     log_error('Error: Postal Code, Order ' + str(order_number) + ', Row ' + str(index) + ': ' + postal_code, error_file)
@@ -283,7 +314,7 @@ with open(import_filename) as import_file:
                     if country in INTL_SHIPPING:
                         customer_ship_amount = INTL_SHIPPING[country]
                     else:
-                        log_error('Error: Country code not included in international shipping')
+                        log_error('Error: Country code not included in international shipping', error_file)
 
                 amount_paid = order_item_unit_price + customer_ship_amount
 
