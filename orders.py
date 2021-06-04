@@ -186,6 +186,7 @@ INTL_SHIPPING = {
     'HR': 25,
     'IS': 25,
     'EE': 25,
+    'GB': 25,
 }
 
 
