@@ -23,6 +23,7 @@ In the Terminal, while in this directory:
 
 - Put files in `./import/[date].csv`
 - Update the date in `settings.json` to correspond to the file in the import directory
+- Run `source bin/activate`
 - Run `python orders.py`
 - Exported file will be created in `./export/[date]` directory
 - If you want `-1` appended to order numbers, set `addons` parameter to `true` in `settings.json`
@@ -32,6 +33,7 @@ In the Terminal, while in this directory:
     - Postal code is longer than 11 characters.
     - Postal code contains characters other than alphanumeric characters or dashes.
     - Country code is not included in international shipping dictionary.
+- Once done, run `deactivate`
 
 
 ## Import settings
