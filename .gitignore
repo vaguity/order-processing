@@ -3,3 +3,4 @@ bin/*
 export/*
 import/*
 settings.json
+pyvenv.cfg
