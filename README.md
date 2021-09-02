@@ -49,6 +49,10 @@ _String._ Corresponds to a filename in `./import/` and then creates a directory 
 
 _Boolean._ When `true`, appends `-1` to all order numbers in the exported file.
 
+### `source`
+
+_String._ Indicates if the imported file came from `CROWDOX` or `BACKERKIT`.
+
 
 ## Script settings
 

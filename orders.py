@@ -10,7 +10,7 @@ json_settings = json.load(json_settings_file)
 SETTINGS = {
     'filename': '',
     'date': json_settings['date'],
-    'source': 'CROWDOX',
+    'source': json_settings['source'],
     'addons': json_settings['addons'],
 }
 
@@ -144,6 +144,7 @@ SKU_PRICING = {
     'MK-2325G-LID': [99, 10],
     'MK-2325T': [99, 10],
     'MK-2325T-LID': [99, 10],
+    'MK-2402': [50, 10],
 }
 
 INTL_SHIPPING = {
@@ -267,16 +268,17 @@ with open(import_filename) as import_file:
                     transaction_date = row[11]
                     email = row[10]
                     name = row[1].replace(',', '').replace('\"', '').rstrip()
-                    first_name = ''
-                    last_name = ''
-                    name_length = len(name)
+                    full_name = name
+                    # first_name = ''
+                    # last_name = ''
+                    # name_length = len(name)
                     # Split name into first name, last name
-                    if name_length > 0:
-                        name_list = name.split(' ')
-                        last_name = name_list.pop()
-                        first_name = ' '.join(name_list)
-                        if name_length > 22:
-                            first_name = trim_length(first_name, name_length - 22)
+                    # if name_length > 0:
+                    #     name_list = name.split(' ')
+                    #     last_name = name_list.pop()
+                    #     first_name = ' '.join(name_list)
+                    #     if name_length > 22:
+                    #         first_name = trim_length(first_name, name_length - 22)
                     # full_name = first_name + ' ' + last_name
                     phone = row[9]
                     address_1 = row[2].replace(',', '')
