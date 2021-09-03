@@ -234,28 +234,31 @@ with open(import_filename) as import_file:
             csv_writer = csv.writer(export_file, delimiter=',', quoting=csv.QUOTE_ALL)
             index = 0
 
-            import_headers = ["Order Export Number", "Order Number", "Order Status", "Order Source", "Order Source Number", "Order Source Sequence", "Order Created Date", "Order Invited Date", "Order Paid Date", "Order Completed Date", "Order Canceled Date", "Order Refused Date", "Order Sales Tax", "Order Vat Tax", "Order Customs Tax", "Order Total", "Order Amount Paid", "Order Tax Paid", "Order Shipping Paid", "Order Balance", "Order Internal Notes", "Original Configuration Name", "Configuration Name", "Manage Url", "Survey Url", "Email", "Ship To Company Name", "Ship To Full Name", "Ship To First Name", "Ship To Middle Name", "Ship To Last Name", "Ship To Phone", "Ship To Address 1", "Ship To Address 2", "Ship To Address 3", "Ship To City", "Ship To State", "Ship To Postal Code", "Ship To Country", "Ship To Country Code", "Ship To Location", "Product Bundle", "Product Line", "Product Name", "Product Sku", "Product Quantity", "Product Weight", "Product Length", "Product Width", "Product Height"]
+            # crowdox_import_headers = ["Order Export Number", "Order Number", "Order Status", "Order Source", "Order Source Number", "Order Source Sequence", "Order Created Date", "Order Invited Date", "Order Paid Date", "Order Completed Date", "Order Canceled Date", "Order Refused Date", "Order Sales Tax", "Order Vat Tax", "Order Customs Tax", "Order Total", "Order Amount Paid", "Order Tax Paid", "Order Shipping Paid", "Order Balance", "Order Internal Notes", "Original Configuration Name", "Configuration Name", "Manage Url", "Survey Url", "Email", "Ship To Company Name", "Ship To Full Name", "Ship To First Name", "Ship To Middle Name", "Ship To Last Name", "Ship To Phone", "Ship To Address 1", "Ship To Address 2", "Ship To Address 3", "Ship To City", "Ship To State", "Ship To Postal Code", "Ship To Country", "Ship To Country Code", "Ship To Location", "Product Bundle", "Product Line", "Product Name", "Product Sku", "Product Quantity", "Product Weight", "Product Length", "Product Width", "Product Height"]
+
+            # backerkit_import_headers = ["Backer ID", "Name", "Address Line 1", "Address Line 2", "Address City", "Address State", "Address Postal Code", "Address Country", "Full Address", "Address Phone", "Email", "Pledged At", "Notes", "Sku Name", "Sku Code", "Quantity"]
 
             headers = ["Order Number", "Order Date", "Payment Date", "Buyer Email", "Ship To Name", "Ship To Address 1", "Ship To Address 2", "Ship To Address 3", "Ship To City", "Ship To State", "Ship To Zip Code", "Ship To Country", "Phone Number", "Item SKU", "Order Item Quantity", "Order Item Unit Price", "Customer Ship Amount", "Amount Paid"]
+
             csv_writer.writerow(headers)
 
             for row in csv_reader:
                 index += 1
-                order_number = row[1]
-
+                order_number = ''
                 price = "0"
 
                 if SETTINGS['source'] == 'CROWDOX':
+                    order_number = row[1]
                     order_number = re.sub('CROWDOX-', '', order_number)
                     sku = row[44]
                     quantity = row[45]
                 elif SETTINGS['source'] == 'BACKERKIT':
-                    # order_number = re.sub('BACKERKIT-', '', order_number)
+                    order_number = row[0]
                     sku = row[14]
                     quantity = row[15]
 
                 if SETTINGS['addons'] is True:
-                        order_number = order_number + '-1'
+                    order_number = order_number + '-1'
 
                 # Import fields
                 if SETTINGS['source'] == 'CROWDOX':
@@ -265,6 +268,7 @@ with open(import_filename) as import_file:
                         converted_date = datetime.datetime.now()
                     else:
                         converted_date = datetime.datetime.strptime(raw_date, '%m/%d/%Y')
+
                     transaction_date = converted_date.strftime('%Y-%m-%d %H:%M')
 
                     email = row[25]
@@ -284,7 +288,14 @@ with open(import_filename) as import_file:
                     postal_code = str(row[37]).replace(',', '')
                     country = row[39].replace(',', '')
                 elif SETTINGS['source'] == 'BACKERKIT':
-                    transaction_date = row[11]
+                    raw_date = row[11]
+                    if not raw_date:
+                        converted_date = datetime.datetime.now()
+                    else:
+                        converted_date = datetime.datetime.strptime(raw_date, '%Y-%m-%d %H:%M:%S %z')
+
+                    transaction_date = converted_date.strftime('%Y-%m-%d %H:%M')
+
                     email = row[10]
                     name = row[1].replace(',', '').replace('\"', '').rstrip()
                     full_name = name
