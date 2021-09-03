@@ -144,7 +144,24 @@ SKU_PRICING = {
     'MK-2325G-LID': [99, 10],
     'MK-2325T': [99, 10],
     'MK-2325T-LID': [99, 10],
-    'MK-2402': [50, 10],
+    'MK-2401': [55, 5],
+    'MK-2402': [95, 10],
+    'MK-2404': [185, 15],
+    'MK-1011-2': [52, 5],
+    'MK-1012-2': [52, 5],
+    'MK-1013-2': [52, 5],
+    'MK-1071-2': [104, 5],
+    'MK-1072-2': [104, 5],
+    'MK-1073-2': [104, 5],
+    'MK-2111-2': [36, 5],
+    'MK-2112-2': [44, 5],
+    'MK-2113-2': [52, 5],
+    'MK-2011-2': [44, 5],
+    'MK-2012-2': [52, 5],
+    'MK-2013-2': [60, 5],
+    'MK-2211': [44, 5],
+    'MK-2212': [52, 5],
+    'MK-2213': [60, 5],
 }
 
 INTL_SHIPPING = {
@@ -230,13 +247,15 @@ with open(import_filename) as import_file:
 
                 if SETTINGS['source'] == 'CROWDOX':
                     order_number = re.sub('CROWDOX-', '', order_number)
-                    if SETTINGS['addons'] is True:
-                        order_number = order_number + '-1'
                     sku = row[44]
                     quantity = row[45]
                 elif SETTINGS['source'] == 'BACKERKIT':
+                    # order_number = re.sub('BACKERKIT-', '', order_number)
                     sku = row[14]
                     quantity = row[15]
+
+                if SETTINGS['addons'] is True:
+                        order_number = order_number + '-1'
 
                 # Import fields
                 if SETTINGS['source'] == 'CROWDOX':
